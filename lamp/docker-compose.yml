@@ -1,0 +1,57 @@
+version: "3"
+networks:
+  opslocal:
+services:
+  webserver:
+    networks:
+      opslocal:
+    build:
+      context: .
+      dockerfile: docker/bin/ops-webserver/Dockerfile
+      args:
+        HOSTNAME: '${HOSTNAME}'
+    container_name: OPS-webserver
+    restart: 'unless-stopped'
+    depends_on:
+      - database
+    ports:
+      - ${HOST_MACHINE_UNSECURE_HOST_PORT-80}:80
+      - ${HOST_MACHINE_SECURE_HOST_PORT-443}:443
+    volumes: 
+      - ./web:/var/www/html
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD-deep70}
+      PMA_PORT: ${HOST_MACHINE_PMA_PORT-8081}
+  database:
+    networks:
+      opslocal:
+    image: mariadb:10.6
+    container_name: OPS-database
+    restart: 'unless-stopped'
+    ports:
+      - ${HOST_MACHINE_MYSQL_PORT-3306}:3306
+    volumes: 
+      - mysql-data:/var/lib/mysql
+      - ./docker/config/mysql:/etc/mysql/conf.d
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD-deep70}
+      MYSQL_DATABASE: ${MYSQL_DATABASE-radixweb}
+      MYSQL_USER: ${MYSQL_USER-radixdev}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD-deep70}
+  phpmyadmin:
+    networks:
+      opslocal:  
+    image: phpmyadmin/phpmyadmin
+    container_name: OPS-phpmyadmin
+    restart: 'unless-stopped'
+    depends_on:
+      - database
+    environment:
+      PMA_HOST: database
+      MYSQL_USER: ${MYSQL_USER-radixdev}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD-deep70}
+      UPLOAD_LIMIT: 3000M
+    ports:
+      - ${HOST_MACHINE_PMA_PORT-8081}:80
+volumes: 
+  mysql-data:

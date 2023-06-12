@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Instagram</title>
+    <style>
+      *{
+        box-sizing: border-box;
+      }
+      body{
+        margin:0;
+        padding:0;
+      }
+      .form-control{
+        width:160px;
+        height:30px;
+        background: #343a40;
+        border: 1px solid rgb(77, 77, 77);
+      }
+      .like-top{
+        width:25px;
+      }
+      .profile{
+        border:1px solid rgb(255, 79, 108);
+        padding: 2px;
+      }
+      .nav-link:hover{
+        background-color: black;
+      }
+      #sidebar{
+        position:sticky;
+        top:2px;
+        height:max-content;
+      }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+      <div class="row gx-0 sticky-top">
+
+        
+        <nav class="navbar w-100 navbar-expand-lg navbar-light bg-light m-0 p-0 border border-bottom-#949494 d-md-none ">
+          <div class="container-fluid m-0 ps-1 p-0 text-center flex-nowrap " style="overflow-x: scroll; ">
+              <img style="width: 130px;" src="Screenshot from 2023-02-20 10-34-35.png" alt="𝓘𝓷𝓼𝓽𝓪𝓰𝓻𝓪𝓶">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle mt-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Followers</a></li>
+                    <li><a class="dropdown-item" href="#">Followings</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="d-flex ">
+                <input class="form-control bg-light mt-1" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn" type="submit"><img class= "like-top" src="https://www.svgrepo.com/show/504459/heart.svg" alt="likes"></button>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+       
+
+        <div class="row gx-0">
+
+          <div class="nav d-lg-none d-md-none d-sm-block fixed-bottom bg-light text-center py-2">
+           <div class="container-fluid gx-0">
+            <div class="row gx-0 p-0">
+              <div class="col-2">
+                <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/499611/home.svg" alt="home">
+              </div>
+             
+                <div class="col-2">
+                <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/505378/explore.svg" alt="explore">
+              </div>
+              <div class="col-2">
+                <img class="bg-light p-1" style="height:30px" src="https://cdn-icons-png.flaticon.com/512/5948/5948543.png" alt="reels">
+              </div>
+              <div class="col-2">
+                <img class="bg-light" style="height:30px" src="data:image/png;base64,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" alt="create">
+              </div>
+              <div class="col-2">
+                <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/499621/mail.svg" alt="message">
+              </div>
+
+              <div class="col-2">
+                <img class="bg-light border border-dark rounded-circle p-1" style="height:30px" src="https://www.svgrepo.com/show/384683/account-avatar-profile-user-8.svg" alt="">
+              </div>
+
+             </div>
+
+           </div>  
+          </div>
+          
+
+
+          <div class="col-3  d-none d-sm-block" id="sidebar">
+            <div class="d-flex mt-2 m-0 p-0 d-block d-sm-none d-none d-md-flex d-lg-flex " >
+                <div class="nav flex-column nav-pills border border-bottom-#949494" 
+                    style="height:100vh" 
+                    id="v-pills-tab" 
+                    role="tablist" 
+                    aria-orientation="vertical">
+                      
+                      <a href="#" class="nav-link active bg-light d-flex " id="v-pills-home-tab" 
+                      data-bs-toggle="pill" 
+                      data-bs-target="#v-pills-home" 
+                      type="button" 
+                      role="tab" 
+                      aria-controls="v-pills-home" 
+                      aria-selected="true" >
+                    <img class="bg-light d-lg-none " style="height:30px" src="https://www.svgrepo.com/show/458242/insta.svg" alt="">
+                    <span class="d-none d-lg-block pt-1 ps-1 " style="color:black; font-size: 30px;">
+                      <img style="width: 130px;" src="Screenshot from 2023-02-20 10-34-35.png" alt="𝓘𝓷𝓼𝓽𝓪𝓰𝓻𝓪𝓶">
+                    </span>
+                    </a>  
+
+
+                      <a href="#" class="nav-link active bg-light d-flex pt-5  " id="v-pills-home-tab" 
+                      data-bs-toggle="pill" 
+                      data-bs-target="#v-pills-home" 
+                      type="button" 
+                      role="tab" 
+                      aria-controls="v-pills-home" 
+                      aria-selected="true">
+                    <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/499611/home.svg" alt="">
+                    <span class="d-none d-lg-block pt-1 ps-2" style="color:black">Home</span>
+                    </a>  
+                  
+                  
+                    <a href="#" class="nav-link active bg-light d-flex pt-3  " 
+                    id="v-pills-search-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#v-pills-search" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="v-pills-search" 
+                    aria-selected="true">
+                    <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/502828/search.svg" alt="">
+                    <span class="d-none d-lg-block pt-1 ps-2" style="color:black">search</span>
+                    </a>  
+                  
+                  
+                  <a href="#" class="nav-link active bg-light d-flex pt-3 " 
+                      id="v-pills-explore-tab" 
+                      data-bs-toggle="pill" 
+                      data-bs-target="#v-pills-explore" 
+                      type="button" 
+                      role="tab" 
+                      aria-controls="v-pills-explore" 
+                      aria-selected="true">
+                    <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/505378/explore.svg" alt="">
+                    <span class="d-none d-lg-block pt-1 ps-2" style="color:black">Explore</span>
+                    </a>  
+                    
+                    
+                    <a href="#" class="nav-link active bg-light d-flex  pt-3 " 
+                    id="v-pills-reels-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#v-pills-reels" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="v-pills-reels" 
+                    aria-selected="true">
+                  <img class="bg-light p-1" style="height:30px " src="https://cdn-icons-png.flaticon.com/512/5948/5948543.png" alt="">
+                  <span class="d-none d-lg-block pt-1 ps-2" style="color:black">Reels</span>
+                  </a>  
+                  
+                  
+                  <a href="#" class="nav-link active bg-light d-flex  pt-3" 
+                  id="v-pills-Messages-tab" 
+                  data-bs-toggle="pill" 
+                  data-bs-target="#v-pills-messages" 
+                  type="button" 
+                  role="tab" 
+                  aria-controls="v-pills-messages" 
+                  aria-selected="true">
+                <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/499621/mail.svg" alt="">
+                <span class="d-none d-lg-block pt-1 ps-2" style="color:black">Messages</span>
+                </a>  
+                
+                
+                <a href="#" class="nav-link active bg-light d-flex pt-3 " 
+                id="v-pills-notifications-tab" 
+                data-bs-toggle="pill" 
+                data-bs-target="#v-pills-notifications" 
+                type="button" 
+                role="tab" 
+                aria-controls="v-pills-notifications" 
+                aria-selected="true">
+              <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/505392/heart.svg" alt="">
+              <span class="d-none d-lg-block pt-1 ps-2" style="color:black">Notifications</span>
+                </a>  
+                  
+                <a href="#" class="nav-link active bg-light d-flex  pt-3 " 
+                id="v-pills-create-tab" 
+                data-bs-toggle="pill" 
+                data-bs-target="#v-pills-create" 
+                type="button" 
+                role="tab" 
+                aria-controls="v-pills-create" 
+                aria-selected="true">
+              <img class="bg-light" style="height:30px" src="data:image/png;base64,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" alt="">
+              <span class="d-none d-lg-block pt-1 ps-2" style="color:black">Create</span>
+              </a>  
+              
+              <a href="#" class="nav-link active bg-light d-flex  pt-3 " 
+                id="v-pills-profile-tab" 
+                data-bs-toggle="pill" 
+                data-bs-target="#v-pills-profile" 
+                type="button" 
+                role="tab" 
+                aria-controls="v-pills-profile" 
+                aria-selected="true">
+                <img class="bg-light border border-dark rounded-circle p-1" style="height:30px" src="https://www.svgrepo.com/show/384683/account-avatar-profile-user-8.svg" alt="">
+              <span class="d-none d-lg-block pt-1 ps-2" style="color:black">Profile</span>
+              </a>  
+                
+              <a href="#" class="nav-link active bg-light d-flex "
+              style="margin-top: 40px;" 
+              id="v-pills-profile-tab" 
+              data-bs-toggle="pill" 
+              data-bs-target="#v-pills-profile" 
+              type="button" 
+              role="tab" 
+              aria-controls="v-pills-profile" 
+              aria-selected="true">
+              <img class="bg-light" style="height:30px" src="https://www.svgrepo.com/show/506246/menu-hamburger.svg" alt="">
+              <span class="d-none d-lg-block pt-1 ps-2" style="color:black">More</span>
+              </a>  
+          </div>
+
+          </div>
+                <div class="tab-content" id="v-pills-tabContent">
+                  <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">...</div>
+                  <div class="tab-pane fade" id="v-pills-search" role="tabpanel" aria-labelledby="v-pills-search-tab">...</div>
+                  <div class="tab-pane fade" id="v-pills-explore" role="tabpanel" aria-labelledby="v-pills-explore-tab">...</div>
+                  <div class="tab-pane fade" id="v-pills-reels" role="tabpanel" aria-labelledby="v-pills-reels-tab">...</div>
+                  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                  <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">...</div>
+                  <div class="tab-pane fade" id="v-pills-create" role="tabpanel" aria-labelledby="v-pills-create-tab">...</div>
+                </div>
+            </div>
+
+
+
+            <div class="contentcol flex-column flex-nowrap col-lg-4 col-md-6 col-sm-6 ms-lg-5 col-md-4 mt-3 bg-light ">
+              <div class="content row gx-0 flex-nowrap ms-lg-0 ms-md-0 m-md-0" style="overflow-x:scroll;">
+                <div class="col-2 text-center" >
+                  <img class="border border-dark rounded-circle p-1" src = "https://www.svgrepo.com/show/384683/account-avatar-profile-user-8.svg" style = "height:50px" alt= "profile" > <br>
+                  <span class = "d-inline-block text-truncate" style = " max-width: 60px;">person 1</span>
+                </div>
+                <div class="col-2 text-center">
+                  <img class="border border-dark rounded-circle p-1" src="https://www.svgrepo.com/show/384677/account-avatar-profile-user-12.svg" style="height:50px" alt=""><br>
+                  <span class="d-inline-block text-truncate" style="max-width: 60px;">person 2</span>
+                </div>
+                <div class="col-2 text-center">
+
+                  <img class="border border-dark rounded-circle p-1" src="https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg" style="height:50px" alt=""><br>
+                  <span class="d-inline-block text-truncate" style="max-width: 60px;">person 3</span>
+                </div>
+                <div class="col-2 text-center">
+                  <img class="border border-dark rounded-circle p-1" src="https://www.svgrepo.com/show/384683/account-avatar-profile-user-8.svg" style="height:50px" alt=""><br>
+                  <span class="d-inline-block text-truncate" style="max-width: 60px;">person 4</span>
+                </div>
+                <div class="col-2 text-center">
+                  <img class="border border-dark rounded-circle p-1" src="https://www.svgrepo.com/show/384680/account-avatar-profile-user-4.svg" style="height:50px" alt=""><br>
+                  <span class="d-inline-block text-truncate" style="max-width: 60px;">person 5</span>
+                </div>
+                <div class="col-2 text-center">
+                  <img class="border border-dark rounded-circle p-1" src="https://www.svgrepo.com/show/384674/account-avatar-profile-user-11.svg" style="height:50px" alt=""><br>
+                  <span class="d-inline-block text-truncate" style="max-width: 60px;">person 6</span>
+                </div>
+                <div class="col-2 text-center">
+                  <img class="border border-dark rounded-circle p-1" src="https://www.svgrepo.com/show/384683/account-avatar-profile-user-8.svg" style="height:50px" alt=""><br>
+                  <span class="d-inline-block text-truncate" style="max-width: 60px;">person 7</span>
+                </div>
+   
+              </div> 
+
+              <div class="row gx-0 mt-1">
+                <div class="container p-0">
+                  <div class="row  gx-0 border border-bottom-dark ps-1 p-2">
+                    <div class="col-9 d-flex">
+                      <img class="border border-dark rounded-circle " src="https://www.svgrepo.com/show/384683/account-avatar-profile-user-8.svg" style="height:30px; padding:2px;" alt="Profile 1"><br>
+                      <span class="d-inline text-truncate ps-2" style="max-width: 120px;">UserName</span> 
+                    </div> 
+                    <div class="col-3 text-end">
+                      <img class="" src="https://cdn-icons-png.flaticon.com/128/3502/3502501.png" style="height:30px; padding:2px;" alt=""><br>  
+                    </div>
+                   </div> 
+                    <div class="row  gx-0 p-0 ">
+                      <div class="col-12 p-0">
+                        <img class="w-100 " src="https://images.pexels.com/photos/1036804/pexels-photo-1036804.jpeg?auto=compress&cs=tinysrgb&w=1600" alt=""> 
+                      </div>
+                    </div>
+                    <div class="row gx-0 p-0 p-sm-1">
+                      <div class="col-1 p-0">  
+                        <img style="width:35px" src="https://www.svgrepo.com/show/505392/heart.svg" alt=""> 
+                     </div>
+                     <div class="col-1 m-0 ps-1">  
+                      <img style="width:32px" src="https://www.svgrepo.com/show/473144/comment-right.svg" alt=""> 
+                   </div>
+                   <div class="col-1 m-0 ps-1">  
+                    <img style="width:35px" src="https://www.svgrepo.com/show/470546/share.svg" alt=""> 
+                  </div>
+                  
+                  <div class="col-8 m-0 p-0">  
+                    <img style="width:35px" src="" alt=""> 
+                  </div>
+
+                  <div class="col-1 m-0 p-0 pt-1">  
+                    <img style="width:30px" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt=""> 
+                  </div>
+                  </div>  
+                  <div class="row gx-0 m-0 p-0">
+                      <p class="m-0 "><strong >545 likes</strong></p>
+                      <p><strong>Username </strong> Caption</p>
+                      <p class="text-muted m-0"> view all 220 Comments</p>
+                   <div class="col-6 text-muted">
+                    <p >Add a Comment...</p>    
+                   </div>
+                   <div class="col-6 text-end">
+                    <img style="width:15px;" src="https://cdn-icons-png.flaticon.com/128/158/158420.png" alt="">    
+                   </div>
+                    <hr>  
+                  </div>
+                </div>
+              </div>
+              <div class="row gx-0 mt-1">
+                <div class="container p-0">
+                  <div class="row gx-0 border border-bottom-dark ps-1 p-2">
+                    <div class="col-9 d-flex">
+                      <img class="border border-dark rounded-circle " src="https://www.svgrepo.com/show/384671/account-avatar-profile-user-14.svg" style="height:30px; padding:2px;" alt="Profile 2"><br>
+                      <span class="d-inline text-truncate ps-2" style="max-width: 120px;">UserName</span> 
+                    </div> 
+                    <div class="col-3 text-end">
+                      <img class="" src="https://cdn-icons-png.flaticon.com/128/3502/3502501.png" style="height:30px; padding:2px;" alt=""><br>  
+                    </div>
+                   </div> 
+                    <div class="row gx-0 p-0 ">
+                      <div class="col-12 p-0">
+                        <img class="w-100 " src="https://images.pexels.com/photos/1037989/pexels-photo-1037989.jpeg?auto=compress&cs=tinysrgb&w=1600" alt=""> 
+                      </div>
+                    </div>
+                    <div class="row gx-0 p-0 p-sm-1">
+                    <div class="col-1 p-0">  
+                        <img style="width:35px" src="https://www.svgrepo.com/show/505392/heart.svg" alt=""> 
+                     </div>
+                     <div class="col-1 m-0 ps-1">  
+                      <img style="width:32px" src="https://www.svgrepo.com/show/473144/comment-right.svg" alt=""> 
+                   </div>
+                   <div class="col-1 m-0 p-0">  
+                    <img style="width:35px" src="https://www.svgrepo.com/show/470546/share.svg"  alt=""> 
+                  </div>
+                   
+                  <div class="col-8 m-0 p-0">  
+                    <img style="width:35px" src="" alt=""> 
+                  </div>
+
+                  <div class="col-1 m-0 p-0 pt-1">  
+                    <img style="width:30px" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt=""> 
+                  </div>
+                  </div>  
+                  <div class="row gx-0 m-0 p-0">
+                      <p class="m-0 "><strong >566 likes</strong></p>
+                      <p><strong>Username </strong> Caption</p>
+                      <p class="text-muted m-0"> view all 230 Comments</p>
+                   <div class="col-6 text-muted">
+                    <p >Add a Comment...</p>    
+                   </div>
+                   <div class="col-6 text-end">
+                    <img style="width:15px;" src="https://cdn-icons-png.flaticon.com/128/158/158420.png" alt="">    
+                   </div>
+                    <hr>  
+                  </div>
+                </div>
+              </div>
+              <div class="row gx-0 mt-1">
+                <div class="container p-0">
+                  <div class="row  gx-0 border border-bottom-dark ps-1 p-2">
+                    <div class="col-9 d-flex">
+                      <img class="border border-dark rounded-circle " src="https://www.svgrepo.com/show/384672/account-avatar-profile-user-7.svg" style="height:30px; padding:2px;" alt="Profile 3"><br>
+                      <span class="d-inline text-truncate ps-2" style="max-width: 120px;">UserName</span> 
+                    </div> 
+                    <div class="col-3 text-end">
+                      <img class="" src="https://cdn-icons-png.flaticon.com/128/3502/3502501.png" style="height:30px; padding:2px;" alt=""><br>  
+                    </div>
+                   </div> 
+                    <div class="row gx-0 p-0 ">
+                      <div class="col-12 p-0">
+                        <img class="w-100 " src="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=1600" alt=""> 
+                      </div>
+                    </div>
+                    <div class="row gx-0 p-0 " >
+                      <div class="col-1 p-0">  
+                        <img style="width:35px" src="https://www.svgrepo.com/show/505392/heart.svg" alt=""> 
+                     </div>
+                     <div class="col-1 m-0 ps-1">  
+                      <img style="width:32px" src="https://www.svgrepo.com/show/473144/comment-right.svg" alt=""> 
+                   </div>
+                   <div class="col-1 m-0 p-0">  
+                    <img style="width:35px" src="https://www.svgrepo.com/show/470546/share.svg" alt=""> 
+                  </div>
+                  
+                  <div class="col-8 m-0 p-0">  
+                    <img style="width:35px" src="" alt=""> 
+                  </div>
+
+                  <div class="col-1 m-0 p-0 pt-1">  
+                    <img style="width:30px" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt=""> 
+                  </div>
+                  </div>  
+                  <div class="row gx-0 m-0 p-0">
+                      <p class="m-0 "><strong >4302 likes</strong></p>
+                      <p><strong>Username </strong> Caption</p>
+                      <p class="text-muted m-0"> view all 232 Comments</p>
+                   <div class="col-6 text-muted">
+                    <p >Add a Comment...</p>    
+                   </div>
+                   <div class="col-6 text-end">
+                    <img style="width:15px;" src="https://cdn-icons-png.flaticon.com/128/158/158420.png" alt="">    
+                   </div>
+                    <hr>  
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="row gx-0 mt-1">
+                <div class="container p-0">
+                  <div class="row gx-0 border border-bottom-dark ps-1 p-2">
+                    <div class="col-9 d-flex">
+                      <img class="border border-dark rounded-circle " src="https://www.svgrepo.com/show/384677/account-avatar-profile-user-12.svg" style="height:30px; padding:2px;" alt=""><br>
+                      <span class="d-inline text-truncate ps-2" style="max-width: 120px;">UserName</span> 
+                    </div> 
+                    <div class="col-3 text-end">
+                      <img class="" src="https://cdn-icons-png.flaticon.com/128/3502/3502501.png" style="height:30px; padding:2px;" alt=""><br>  
+                    </div>
+                   </div> 
+                    <div class="row gx-0 p-0 ">
+                      <div class="col-12 p-0">
+                        <img class="w-100 " src="https://images.pexels.com/photos/783941/pexels-photo-783941.jpeg?auto=compress&cs=tinysrgb&w=1600" alt=""> 
+                      </div>
+                    </div>
+                    <div class="row gx-0 p-0 p-sm-1">
+                      <div class="col-1 p-0">  
+                        <img style="width:35px" src="https://www.svgrepo.com/show/505392/heart.svg" alt=""> 
+                     </div>
+                     <div class="col-1 m-0 ps-1">  
+                      <img style="width:32px" src="https://www.svgrepo.com/show/473144/comment-right.svg" alt=""> 
+                   </div>
+                   <div class="col-1 m-0 p-0">  
+                    <img style="width:35px" src="https://www.svgrepo.com/show/470546/share.svg" alt=""> 
+                  </div>
+                  
+                  <div class="col-8 m-0 p-0">  
+                    <img style="width:35px" src="" alt=""> 
+                  </div>
+
+                  <div class="col-1 m-0 p-0 pt-1">  
+                    <img style="width:30px" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt=""> 
+                  </div>
+                  </div>  
+                  <div class="row gx-0 m-0 p-0">
+                      <p class="m-0 "><strong >37422 likes</strong></p>
+                      <p><strong>Username </strong> Caption</p>
+                      <p class="text-muted m-0"> view all 233 Comments</p>
+                   <div class="col-6 text-muted">
+                    <p >Add a Comment...</p>    
+                   </div>
+                   <div class="col-6 text-end">
+                    <img style="width:15px;" src="https://cdn-icons-png.flaticon.com/128/158/158420.png" alt="">    
+                   </div>
+                    <hr> <br>
+                    <br>
+                    <br>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row gx-0 mt-1">
+                <div class="container p-0">
+                  <div class="row gx-0 border border-bottom-dark ps-1 p-2">
+                    <div class="col-9 d-flex">
+                      <img class="border border-dark rounded-circle " src="https://www.svgrepo.com/show/384680/account-avatar-profile-user-4.svg" style="height:30px; padding:2px;" alt=""><br>
+                      <span class="d-inline text-truncate ps-2" style="max-width: 120px;">UserName</span> 
+                    </div> 
+                    <div class="col-3 text-end">
+                      <img class="" src="https://cdn-icons-png.flaticon.com/128/3502/3502501.png" style="height:30px; padding:2px;" alt=""><br>  
+                    </div>
+                   </div> 
+                    <div class="row gx-0 p-0 ">
+                      <div class="col-12 p-0">
+                        <img class="w-100 " src="https://images.pexels.com/photos/853151/pexels-photo-853151.jpeg?auto=compress&cs=tinysrgb&w=1600" alt=""> 
+                      </div>
+                    </div>
+                    <div class="row gx-0 p-0 p-sm-1">
+                      <div class="col-1 p-0">  
+                        <img style="width:35px" src="https://www.svgrepo.com/show/505392/heart.svg" alt=""> 
+                     </div>
+                     <div class="col-1 m-0 ps-1">  
+                      <img style="width:32px" src="https://www.svgrepo.com/show/473144/comment-right.svg" alt=""> 
+                   </div>
+                   <div class="col-1 m-0 p-0">  
+                    <img style="width:35px" src="https://www.svgrepo.com/show/470546/share.svg" alt=""> 
+                  </div>
+                  
+                  <div class="col-8 m-0 p-0">  
+                    <img style="width:35px" src="" alt=""> 
+                  </div>
+
+                  <div class="col-1 m-0 p-0 pt-1">  
+                    <img style="width:30px" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt=""> 
+                  </div>
+                  </div>  
+                  <div class="row gx-0 m-0 p-0">
+                      <p class="m-0 "><strong >896 likes</strong></p>
+                      <p><strong>Username </strong> Caption</p>
+                      <p class="text-muted m-0"> view all 342 Comments</p>
+                   <div class="col-6 text-muted">
+                    <p >Add a Comment...</p>    
+                   </div>
+                   <div class="col-6 text-end">
+                    <img style="width:15px;" src="https://cdn-icons-png.flaticon.com/128/158/158420.png" alt="">    
+                   </div>
+                    <hr> <br>
+                    <br>
+                    <br>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row gx-0 mt-1">
+                <div class="container p-0">
+                  <div class="row gx-0 border border-bottom-dark ps-1 p-2">
+                    <div class="col-9 d-flex">
+                      <img class="border border-dark rounded-circle " src="https://www.svgrepo.com/show/384684/account-avatar-profile-user-15.svg" style="height:30px; padding:2px;" alt=""><br>
+                      <span class="d-inline text-truncate ps-2" style="max-width: 120px;">UserName</span> 
+                    </div> 
+                    <div class="col-3 text-end">
+                      <img class="" src="https://cdn-icons-png.flaticon.com/128/3502/3502501.png" style="height:30px; padding:2px;" alt=""><br>  
+                    </div>
+                   </div> 
+                    <div class="row gx-0 p-0 ">
+                      <div class="col-12 p-0">
+                        <img class="w-100 " src="https://images.pexels.com/photos/267961/pexels-photo-267961.jpeg?auto=compress&cs=tinysrgb&w=1600" alt=""> 
+                      </div>
+                    </div>
+                    <div class="row gx-0 p-0 p-sm-1">
+                      <div class="col-1 p-0">  
+                        <img style="width:35px" src="https://www.svgrepo.com/show/505392/heart.svg" alt=""> 
+                     </div>
+                     <div class="col-1 m-0 ps-1">  
+                      <img style="width:32px" src="https://www.svgrepo.com/show/473144/comment-right.svg" alt=""> 
+                   </div>
+                   <div class="col-1 m-0 p-0">  
+                    <img style="width:35px" src="https://www.svgrepo.com/show/470546/share.svg" alt=""> 
+                  </div>
+                  
+                  <div class="col-8 m-0 p-0">  
+                    <img style="width:35px" src="" alt=""> 
+                  </div>
+
+                  <div class="col-1 m-0 p-0 pt-1">  
+                    <img style="width:30px" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt=""> 
+                  </div>
+                  </div>  
+                  <div class="row gx-0 m-0 p-0">
+                      <p class="m-0 "><strong >3465 likes</strong></p>
+                      <p><strong>Username </strong> Caption</p>
+                      <p class="text-muted m-0"> view all 450 Comments</p>
+                   <div class="col-6 text-muted">
+                    <p >Add a Comment...</p>    
+                   </div>
+                   <div class="col-6 text-end">
+                    <img style="width:15px;" src="https://cdn-icons-png.flaticon.com/128/158/158420.png" alt="">    
+                   </div>
+                    <hr> <br>
+                    <br>
+                    <br>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row gx-0 mt-1">
+                <div class="container p-0">
+                  <div class="row gx-0 border border-bottom-dark ps-1 p-2">
+                    <div class="col-9 d-flex">
+                      <img class="border border-dark rounded-circle " src="https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg" style="height:30px; padding:2px;" alt=""><br>
+                      <span class="d-inline text-truncate ps-2" style="max-width: 120px;">UserName</span> 
+                    </div> 
+                    <div class="col-3 text-end">
+                      <img class="" src="https://cdn-icons-png.flaticon.com/128/3502/3502501.png" style="height:30px; padding:2px;" alt=""><br>  
+                    </div>
+                   </div> 
+                    <div class="row gx-0 p-0 ">
+                      <div class="col-12 p-0">
+                        <img class="w-100 " src="https://images.pexels.com/photos/889545/pexels-photo-889545.jpeg?auto=compress&cs=tinysrgb&w=1600" alt=""> 
+                      </div>
+                    </div>
+                    <div class="row gx-0 p-0 p-sm-1">
+                      <div class="col-1 p-0">  
+                        <img style="width:35px" src="https://www.svgrepo.com/show/505392/heart.svg" alt=""> 
+                     </div>
+                     <div class="col-1 m-0 ps-1">  
+                      <img style="width:32px" src="https://www.svgrepo.com/show/473144/comment-right.svg" alt=""> 
+                   </div>
+                   <div class="col-1 m-0 p-0">  
+                    <img style="width:35px" src="https://www.svgrepo.com/show/470546/share.svg" alt=""> 
+                  </div>
+                  
+                  <div class="col-8 m-0 p-0">  
+                    <img style="width:35px" src="" alt=""> 
+                  </div>
+
+                  <div class="col-1 m-0 p-0 pt-1">  
+                    <img style="width:30px" src="https://cdn-icons-png.flaticon.com/512/5662/5662990.png" alt=""> 
+                  </div>
+                  </div>  
+                  <div class="row gx-0 m-0 p-0">
+                      <p class="m-0 "><strong >3543 likes</strong></p>
+                      <p><strong>Username </strong> Caption</p>
+                      <p class="text-muted m-0"> view all 340 Comments</p>
+                   <div class="col-6 text-muted">
+                    <p >Add a Comment...</p>    
+                   </div>
+                   <div class="col-6 text-end">
+                    <img style="width:15px;" src="https://cdn-icons-png.flaticon.com/128/158/158420.png" alt="">    
+                   </div>
+                    <hr> <br>
+                    <br>
+                    <br>
+                  </div>
+                </div>
+              </div>
+                </div>
+              </div>
+            </div>
+           
+        </div>
+         
+        </div>
+        
+      </div> 
+    </div>
+ 
+    
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>
